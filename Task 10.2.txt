@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+//Задание 10.2 v1 Гармошка
+void pack(int mass[], int chisla[], int n);
+void unpack(int chisla[], int UnpackedMass[], int n);
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+    
+    int n;
+    int j, z;
+    int nums[18];
+
+    for (j = 0;j < 18;j++) {
+        nums[j] = 0;
+    }
+
+    cout << "Количество чисел в массиве = ";
+    cin >> n;
+    int* mass = new int[n];
+    int* UnpackedMass = new int[n];
+
+    for (j = 0;j < n;j++) { // Заполнение массива
+        mass[j] = rand() % 18;
+    }
+    j = 0;
+    while (j < n - 1) { // Сортировка массива
+        if (mass[j] <= mass[j + 1]) j++;
+        else {
+            z = mass[j];
+            mass[j] = mass[j + 1];
+            mass[j + 1] = z;
+            if (j > 0) j--;
+        }
+    }
+
+    pack(mass, nums, n);
+    for (j = 0;j < 18;j++) {
+        if (nums[j] > 0) {
+            cout << j << "(" << nums[j] << ")" << endl;
+        }
+    }
+    
+    unpack(nums, UnpackedMass, n);
+
+    for (j = 0;j < n;j++) {
+            cout << UnpackedMass[j] << " ";
+    }
+    delete[] mass;
+    delete[] UnpackedMass;
+}
+
+void pack(int mass[], int nums[], int n) {
+    int i, s;
+    s = 0;
+    for (i = 0;i < n;i++) {
+        nums[mass[i]]++;
+    }
+}
+
+void unpack(int nums[], int UnpackedMass[], int n) {
+    int i,k,s;
+    s = 0;
+    for (i = 0;i < 18;i++) {
+        for (k = s;k < s+nums[i];k++) {
+            UnpackedMass[k] = i;
+        }
+        s = s + nums[i];
+    }
+}
