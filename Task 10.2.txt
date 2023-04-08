@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 //Задание 10.2 v1 Гармошка
-void pack(int mass[], int chisla[], int n);
-void unpack(int chisla[], int UnpackedMass[], int n);
+void pack(int mass[], int nums[], int n);
+void unpack(int nums[], int UnpackedMass[], int n);
 
 int main()
 {
