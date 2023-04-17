@@ -4,7 +4,7 @@ int main(){
 string word[20];
 int n;
 cin>>n;
-//Ввод слов данных.
+//Ввод данных слов.
 for(int i=0;i<n;i++){
     cin>>word[i];
 }
