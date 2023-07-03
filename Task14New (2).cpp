@@ -3,16 +3,26 @@
 #include <stdio.h>
 using namespace std;
 
+//Упражнение 1. Неориентированный граф задан произвольной последовательностью ребер. 
+// Исходные данные находятся в текстовом файле. Создайте матрицу смежности для неориентированного графа.  
+// Выведите результат в отдельный текстовый файл.
+//Упражнение 2. Используя данные из текстового файла, полученного при выполнении упр. 1,
+// постройте массив номеров смежных вершин для неориентированного графа.
+// Выведите результат в отдельный текстовый файл.
+//Упражнение 3. Используя данные из текстового файла, полученного при выполнении упр. 2,
+// сформируйте последовательность ребер неориентированного графа.
+// Выведите результат в отдельный текстовый файл.
+
 void main()
 {
 	int n, m;
 
 	/* УПРАЖНЕНИЕ 1 */
 	FILE* file0;
-	file0 = fopen("test.txt", "rt");
-	fscanf(file0, "%d%d", &n, &m);
+	file0 = fopen("test.txt", "rt"); 
+	fscanf(file0, "%d%d", &n, &m); //В файле test.txt считываются два числа - количество вершин и количество ребер в графе
 	int** Matrix = new int* [n];
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++)//Создается двумерный массив Matrix размера n x n, заполненный нулями
 	{
 		Matrix[i] = new int[n];
 		for (int j = 0;j < n;j++)
@@ -21,7 +31,7 @@ void main()
 		}
 	}
 	int i, j;
-	for (int k = 0; k < m;k++)
+	for (int k = 0; k < m;k++) //В цикле считываются координаты ребер и помечаются единицами в матрице Matrix
 	{
 		fscanf(file0, "%d%d", &i, &j);
 		i--, j--;
@@ -29,12 +39,12 @@ void main()
 		Matrix[j][i] = 1;
 	}
 
-	/* вывод в файл */
-	FILE* fAnswer1;
-	fAnswer1 = fopen("answer1.txt", "wt");
-	fprintf(fAnswer1, "peaks and edges :\n");
+	/* вывод в файл */ 
+	FILE* fAnswer1; //Создается указатель на файл fAnswer1 и открывается файл answer1.txt в режиме записи
+	fAnswer1 = fopen("answer1.txt", "wt"); //В файл answer1.txt записывается количество вершин и количество ребер в графе, а также матрица смежности графа
+	fprintf(fAnswer1, "вершины и ребра:\n");
 	fprintf(fAnswer1, "%d %d\n", n, m);
-	fprintf(fAnswer1, "Adjacency matrix\n");
+	fprintf(fAnswer1, "Матрица смежности\n");
 	for (int i = 0; i < n;i++)
 	{
 		for (int j = 0;j < n;j++)
@@ -50,7 +60,7 @@ void main()
 	/* УПРАЖНЕНИЕ 2 */
 	FILE* file1;
 	file1 = fopen("answer1.txt", "rt");
-	char* str[500];
+	char* str[500];//Из файла "answer1.txt" считываются данные о количестве вершин и ребер графа, а также матрица смежности;
 	fscanf(file1, "%s", &str);
 	fscanf(file1, "%s", &str);
 	fscanf(file1, "%s", &str);
@@ -71,12 +81,12 @@ void main()
 			fscanf(file1, "%d ", &Matrix1[i][j]);
 		}
 	}
-
+	//Создаются массивы D, S и L; D - массив номеров соседних вершин, S - начальные индексы для каждого списка, L - массив длин списков
 	int * D, * S, * L;
 	D = new int[m + m];
 	S = new int[n];
 	L = new int[n];
-	for (int i = 0;i < n;i++) L[i] = 0;
+	for (int i = 0;i < n;i++) L[i] = 0; //В циклах заполняются массивы D, S и L в соответствии с матрицей смежности;
 	int k = 0;
 	S[0] = 0;
 	for (int i = 0;i < n;i++)
@@ -99,7 +109,6 @@ void main()
 	printf("\n");
 	for (int i = 0;i < m+m;i++) printf("%d ", D[i]+1);
 	printf("\n");
-
 
 	//int* v1, * v2, * D, * S, * L, * U;
 	//v1 = new int[m];
@@ -158,7 +167,7 @@ void main()
 
 	///* УПРАЖНЕНИЕ 3 */
 	//FILE* file2;
-	//file2 = fopen("answer2.txt", "rt");
+	//file2 = fopen("answer2.txt", "rt"); // Из файла answer2.txt считываются данные о количестве вершин и ребер графа, а также массивы D, S и L
 	//fscanf(file2, "%s", &str);
 	//fscanf(file2, "%s", &str);
 	//fscanf(file2, "%s", &str);
@@ -179,7 +188,7 @@ void main()
 	//S1 = new int[n];
 	//L1 = new int[n];
 	//U1 = new int[n];
-	//for (int i = 0;i < m + m;i++) fscanf(file2, "%d ", &D1[i]);
+	//for (int i = 0;i < m + m;i++) fscanf(file2, "%d ", &D1[i]); // В файл answer3.txt записываются последовательности ребер между вершинами;
 	//fscanf(file2, "%s", &str);
 	//fscanf(file2, "%s", &str);
 	//fscanf(file2, "%s", &str);
@@ -199,7 +208,7 @@ void main()
 	////printf("\n");
 	////for (int i = 0;i < n;i++) printf("%d ", S1[i]);
 
-	///* вывод в файл */
+	////* вывод в файл */
 	//FILE* fAnswer3;
 	//fAnswer3 = fopen("answer3.txt", "wt");
 	//fprintf(fAnswer3, "Последовательность ребер: ");
